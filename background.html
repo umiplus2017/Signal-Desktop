@@ -86,6 +86,7 @@
                       <li class='verify-identity'>{{ verify-identity }}</li>
                   {{/group}}
                   <li class='disappearing-messages'>{{ disappearing-messages }}</li>
+                  <li class='muted'>{{ muted }}</li>
                   <li class='destroy'>{{ destroy }}</li>
               </ul>
             </div>
@@ -250,6 +251,7 @@
   <script type='text/x-tmpl-mustache' id='conversation-preview'>
       {{> avatar }}
       <div class='contact-details'>
+          <span class='ismuted' style='background-image:url("{{ ismuted.url }}");'></span>
           <span class='last-timestamp' data-timestamp='{{ last_message_timestamp }}' dir='auto' > </span>
           {{> contact_name_and_number }}
           {{ #unreadCount }}
@@ -631,6 +633,7 @@
   <script type='text/javascript' src='js/models/conversations.js'></script>
   <script type='text/javascript' src='js/models/blockedNumbers.js'></script>
   <script type='text/javascript' src='js/expiring_messages.js'></script>
+  <script type='text/javascript' src='js/models/mutedNumbers.js'></script>
 
   <script type='text/javascript' src='js/chromium.js'></script>
   <script type='text/javascript' src='js/registration.js'></script>

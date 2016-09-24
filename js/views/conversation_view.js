@@ -75,6 +75,7 @@
                 'view-members'    : i18n('members'),
                 'end-session'     : i18n('resetSession'),
                 'verify-identity' : i18n('verifySafetyNumbers'),
+                'muted'           : i18n('muteConversation'),
                 'destroy'         : i18n('deleteMessages'),
                 'send-message'    : i18n('sendMessage'),
                 'disappearing-messages': i18n('disappearingMessages'),
@@ -139,6 +140,7 @@
             'submit .send': 'sendMessage',
             'input .send-message': 'updateMessageFieldSize',
             'keydown .send-message': 'updateMessageFieldSize',
+            'click .muted': 'muteConversation',
             'click .destroy': 'destroyMessages',
             'click .end-session': 'endSession',
             'click .leave-group': 'leaveGroup',
@@ -532,6 +534,10 @@
 
         isHidden: function() {
             return (this.$el.css('display') === 'none') || this.$('.panel').css('display') === 'none';
+        },
+
+        muteConversation: function() {
+            this.model.muteConversation();
         }
     });
 })();

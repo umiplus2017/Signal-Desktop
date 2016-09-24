@@ -29,7 +29,7 @@
     database: Whisper.Database,
     storeName: 'conversations',
     defaults: function() {
-      return { unreadCount : 0 };
+      return { unreadCount : 0, muted : null };
     },
 
     handleMessageError: function(message, errors) {
@@ -402,6 +402,44 @@
         return this.get('type') === 'private';
     },
 
+    muteConversation: function() {
+        if (!storage.isMuted(this.id)) {
+            var numbers = storage.get('muted', []);
+            console.log(numbers.constructor === Array);
+            if (numbers.length > 0) {
+                numbers.push(this.id);
+                storage.put('muted', numbers);
+            } else {
+                var mutedNumbers = [];
+                mutedNumbers.push(this.id);
+                storage.put('muted', mutedNumbers);
+            }
+            console.log(storage.get('muted', []));
+        } else {
+            var numbers = storage.get('muted', []);
+            console.log("get storage: " + numbers);
+            var index = numbers.indexOf(this.id);
+            console.log("index: " + index);
+            if (index > -1) {
+                numbers.splice(index, 1);
+                console.log("after removing: " + numbers);
+                // restore muted numbers
+                storage.put('muted', numbers);
+            }
+        }
+        this.set({ 'muted': this.getMutedState() });
+    },
+    getMutedState: function() {
+      return storage.isMuted(this.id);
+    },
+    getMutedIcon: function() {
+        if (this.getMutedState()) {
+            return { url: '/images/do_not_disturb.svg' };
+        } else {
+            return { url: '' };
+        }
+    },
+
     revokeAvatarUrl: function() {
         if (this.avatarUrl) {
             URL.revokeObjectURL(this.avatarUrl);
@@ -506,6 +544,9 @@
         }.bind(this));
     },
     notify: function(message) {
+        if (storage.isMuted(this.id)) {
+            return;
+        }
         if (!message.isIncoming()) {
             return;
         }
