@@ -202,6 +202,7 @@
         },
 
         onOpened: function() {
+            // request all conversation members' keys
             this.view.resetScrollPosition();
             this.$el.trigger('force-resize');
             this.focusMessageField();

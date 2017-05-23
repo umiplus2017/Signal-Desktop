@@ -291,7 +291,13 @@
                 var identityKey = new IdentityKey({id: number});
                 identityKey.fetch().always(function() {
                     var oldpublicKey = identityKey.get('publicKey');
-                    if (!oldpublicKey || equalArrayBuffers(oldpublicKey, publicKey)) {
+
+                    if (equalArrayBuffers(oldpublicKey, publicKey)) {
+                        resolve(true);
+                    } else if (!oldpublicKey) {
+                        // first use
+                        // TODO: mark that it's a first-use token (which means no waiting to send)
+                        // where do we persist it?
                         resolve(true);
                     } else if (!storage.get('safety-numbers-approval', true)) {
                         this.removeIdentityKey(identifier).then(function() {
@@ -319,7 +325,7 @@
                 });
             });
         },
-        saveIdentity: function(identifier, publicKey) {
+        saveIdentity: function(identifier, publicKey, firstUse) {
             if (identifier === null || identifier === undefined) {
                 throw new Error("Tried to put identity key for undefined/null key");
             }
@@ -333,7 +339,11 @@
                     var oldpublicKey = identityKey.get('publicKey');
                     if (!oldpublicKey) {
                         // Lookup failed, or the current key was removed, so save this one.
-                        identityKey.save({publicKey: publicKey}).then(resolve);
+                        identityKey.save({
+                            publicKey: publicKey,
+                            timestamp: Date.now(),
+                            firstUse: firstUse
+                        }).then(resolve);
                     } else {
                         // Key exists, if it matches do nothing, else throw
                         if (equalArrayBuffers(oldpublicKey, publicKey)) {

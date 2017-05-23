@@ -217,6 +217,24 @@
                 });
                 next();
             }
+        },
+        {
+            version: "13.0",
+            migrate: function(transaction, next) {
+                console.log('migration 13.0');
+                console.log('cleaning up expiring messages with no expires_at');
+                window.addEventListener('storage_ready', function() {
+                    var messages = new Whisper.MessageCollection();
+                    messages.fetch({
+                      conditions: {expireTimer: {$gt: 0}},
+                      addIndividually: true
+                    });
+                    messages.on('add', function(m) {
+                      messages.remove(m);
+                    });
+                });
+                next();
+            }
         }
     ];
 }());
