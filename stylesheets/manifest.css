@@ -334,9 +334,18 @@ button.hamburger {
   .contact-details p {
     overflow-x: hidden;
     text-overflow: ellipsis; }
+  .contact-details .ismuted {
+    display: none; }
+  .contact-details .ismuted.muted {
+    display: inline-block;
+    -webkit-mask: url("/images/do_not_disturb.svg") no-repeat center;
+    -webkit-mask-size: 100%;
+    background-color: black;
+    width: 1em;
+    height: 1em; }
   .contact-details .name {
-    display: block;
-    margin: 0px;
+    display: inline-block;
+    margin: 0;
     font-size: 1em;
     text-overflow: ellipsis;
     overflow-x: hidden;
@@ -344,14 +353,6 @@ button.hamburger {
   .contact-details .number {
     color: #616161;
     font-size: 0.92857em; }
-  .contact-details .ismuted {
-    float: left;
-    height: 16px;
-    width: 16px;
-    background-size: 16px 16px;
-    background-repeat: no-repeat;
-  }
-
 
 .recipients-input {
   position: relative; }
@@ -1563,6 +1564,10 @@ li.entry .error-icon-container {
         color: white; }
   .ios .gutter ::-webkit-scrollbar-track {
     background: #f3f3f3; }
+.ios .selected .contact-details .ismuted.muted {
+  -webkit-mask: url("/images/do_not_disturb.svg") no-repeat center;
+  -webkit-mask-size: 100%;
+  background-color: white; }
 .ios .tool-bar {
   float: left;
   padding: 15px; }
@@ -1901,6 +1906,10 @@ li.entry .error-icon-container {
   .android-dark .message-detail, .android-dark .message-container, .android-dark .conversation,
   .android-dark .discussion-container {
     background-color: #171717; }
+  .android-dark .contact-details .ismuted.muted {
+    -webkit-mask: url("/images/do_not_disturb.svg") no-repeat center;
+    -webkit-mask-size: 100%;
+    background-color: #CCCCCC; }
   .android-dark .modal .content {
     background-color: #333333; }
   .android-dark .lightbox .content {

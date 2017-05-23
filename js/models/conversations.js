@@ -412,13 +412,6 @@
     getMutedState: function() {
       return this.get('muted');
     },
-    getMutedIcon: function() {
-        if (this.getMutedState()) {
-            return { url: '/images/do_not_disturb.svg' };
-        } else {
-            return { url: '' };
-        }
-    },
 
     revokeAvatarUrl: function() {
         if (this.avatarUrl) {

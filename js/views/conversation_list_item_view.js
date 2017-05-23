@@ -47,17 +47,16 @@
                     last_message_timestamp: this.model.get('timestamp'),
                     number: this.model.getNumber(),
                     avatar: this.model.getAvatar(),
-                    unreadCount: this.model.get('unreadCount'),
-                    ismuted: this.model.getMutedIcon()
+                    unreadCount: this.model.get('unreadCount')
                 }, this.render_partials())
             );
             this.timeStampView.setElement(this.$('.last-timestamp'));
             this.timeStampView.update();
 
             if (this.model.getMutedState()) {
-                this.$('.ismuted').show();
+                this.$('.ismuted').addClass('muted');
             } else {
-                this.$('.ismuted').hide();
+                this.$('.ismuted').removeClass('muted');
             }
 
             emoji_util.parse(this.$('.name'));

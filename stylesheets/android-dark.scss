@@ -26,6 +26,11 @@ $text-dark: #CCCCCC;
   .discussion-container {
     background-color: $grey-dark_l3;
   }
+
+  .contact-details .ismuted.muted {
+    @include color-svg('/images/do_not_disturb.svg', $text-dark);
+  }
+
   .modal .content {
     background-color: $grey-dark;
   }
